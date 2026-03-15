@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday My Love ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;600&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -53,7 +53,7 @@
             50% { opacity: 0.8; }
         }
 
-        /* Floating Particles */
+        /* Advanced Particle System */
         .particles {
             position: fixed;
             top: 0;
@@ -89,6 +89,28 @@
             }
             100% {
                 transform: translateY(-100vh) translateX(100px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Shooting Stars */
+        .shooting-star {
+            position: fixed;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            animation: shoot 3s linear infinite;
+            opacity: 0;
+            z-index: 0;
+        }
+
+        @keyframes shoot {
+            0% {
+                transform: translateX(-100px) translateY(100px) rotate(-45deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100vw) translateY(-100px) rotate(-45deg);
                 opacity: 0;
             }
         }
@@ -318,7 +340,6 @@
             overflow: hidden;
         }
 
-        /* Full Height Background Image Container */
         .hero-background {
             position: absolute;
             top: 0;
@@ -328,15 +349,19 @@
             z-index: 0;
         }
 
-        /* Image takes full container size (original cover) */
         .hero-background img {
             width: 100%;
             height: 100%;
-            object-fit: cover;      /* restored to cover */
+            object-fit: cover;
             object-position: center center;
+            animation: heroZoom 20s ease-in-out infinite alternate;
         }
 
-        /* Dark Gradient Overlay for Text Readability */
+        @keyframes heroZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
         .hero-overlay {
             position: absolute;
             top: 0;
@@ -353,7 +378,6 @@
             pointer-events: none;
         }
 
-        /* Additional side gradients for better text contrast */
         .hero-overlay::before {
             content: '';
             position: absolute;
@@ -384,7 +408,6 @@
             50% { transform: scale(1.3); opacity: 0.8; }
         }
 
-        /* Floating Hearts on Hero Image */
         .hero-floating-hearts {
             position: absolute;
             top: 0;
@@ -628,13 +651,105 @@
             letter-spacing: 3px;
         }
 
-        /* Photo Slider Section - Modified to contain instead of cover */
+        /* Video Section - Cinematic */
+        .video-section {
+            padding: 100px 20px;
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.3) 50%, transparent 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 45, 149, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(255, 179, 71, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .video-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 45, 149, 0.3),
+                0 0 60px rgba(255, 45, 149, 0.2);
+            transform: perspective(1000px) rotateX(2deg);
+            transition: all 0.5s ease;
+        }
+
+        .video-container:hover {
+            transform: perspective(1000px) rotateX(0deg) scale(1.02);
+            box-shadow: 
+                0 40px 80px rgba(0, 0, 0, 0.6),
+                0 0 0 2px rgba(255, 45, 149, 0.5),
+                0 0 80px rgba(255, 45, 149, 0.3);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .video-wrapper iframe,
+        .video-wrapper video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                rgba(255, 45, 149, 0.1),
+                transparent,
+                rgba(255, 179, 71, 0.1)
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .video-caption {
+            text-align: center;
+            margin-top: 30px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: var(--soft-gold);
+            text-shadow: 0 0 20px rgba(255, 179, 71, 0.5);
+            animation: captionPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes captionPulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; text-shadow: 0 0 30px rgba(255, 179, 71, 0.8); }
+        }
+
+        /* Photo Slider Section - Enhanced */
         .slider-section {
             padding: 100px 20px;
         }
 
         .slider-container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             position: relative;
         }
@@ -657,18 +772,18 @@
             min-width: 100%;
             position: relative;
             overflow: hidden;
-            background-color: #000; /* for letterboxing when contain */
+            background-color: #000;
         }
 
         .slide img {
             width: 100%;
-            height: 600px;
-            object-fit: contain;      /* changed from cover to contain */
+            height: 700px;
+            object-fit: contain;
             transition: transform 6s ease;
         }
 
         .slide.active img {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
         .slide-overlay {
@@ -676,15 +791,16 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 60px 40px 40px;
-            background: linear-gradient(to top, rgba(10, 10, 15, 0.95), transparent);
+            padding: 80px 40px 50px;
+            background: linear-gradient(to top, rgba(10, 10, 15, 0.95) 0%, rgba(10, 10, 15, 0.7) 50%, transparent 100%);
         }
 
         .slide-text {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
             color: #fff;
-            font-style: italic;
+            text-align: center;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
             opacity: 0;
             transform: translateY(30px);
             transition: all 0.6s ease 0.3s;
@@ -693,18 +809,43 @@
         .slide.active .slide-text {
             opacity: 1;
             transform: translateY(0);
+            animation: textShine 3s ease-in-out infinite;
+        }
+
+        @keyframes textShine {
+            0%, 100% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+            50% { text-shadow: 0 0 40px rgba(255, 45, 149, 0.8), 0 0 60px rgba(255, 179, 71, 0.6); }
+        }
+
+        .slide-counter {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            color: var(--soft-gold);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 10;
         }
 
         .slider-dots {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
             margin-top: 30px;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .dot {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.3);
             cursor: pointer;
@@ -714,21 +855,21 @@
 
         .dot:hover {
             background: rgba(255, 45, 149, 0.6);
-            transform: scale(1.2);
+            transform: scale(1.3);
         }
 
         .dot.active {
             background: var(--romantic-pink);
-            box-shadow: 0 0 15px var(--romantic-pink);
-            transform: scale(1.3);
+            box-shadow: 0 0 15px var(--romantic-pink), 0 0 30px var(--soft-pink);
+            transform: scale(1.4);
         }
 
         .slider-nav {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border);
@@ -739,29 +880,43 @@
             cursor: pointer;
             transition: all 0.3s ease;
             color: #fff;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             z-index: 10;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
         }
 
         .slider-nav:hover {
             background: rgba(255, 45, 149, 0.3);
             border-color: var(--romantic-pink);
             transform: translateY(-50%) scale(1.1);
-            box-shadow: 0 0 20px rgba(255, 45, 149, 0.4);
+            box-shadow: 0 0 30px rgba(255, 45, 149, 0.5);
         }
 
         .slider-nav.prev {
-            left: -25px;
+            left: -30px;
         }
 
         .slider-nav.next {
-            right: -25px;
+            right: -30px;
+        }
+
+        /* Progress Bar */
+        .slider-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--romantic-pink), var(--soft-gold));
+            transition: width 0.1s linear;
+            z-index: 10;
+            box-shadow: 0 0 10px var(--romantic-pink);
         }
 
         /* Love Message Section */
         .message-section {
             padding: 120px 20px;
             text-align: center;
+            position: relative;
         }
 
         .message-container {
@@ -777,10 +932,32 @@
             box-shadow: 
                 0 30px 60px rgba(0, 0, 0, 0.4),
                 inset 0 0 30px rgba(255, 255, 255, 0.02);
+            overflow: hidden;
         }
 
-        .message-container::before,
-        .message-container::after {
+        .message-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 45, 149, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .message-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .message-container::after,
+        .message-container .corner-decoration {
             content: '❤️';
             position: absolute;
             font-size: 2rem;
@@ -789,13 +966,21 @@
         }
 
         .message-container::before {
+            content: '❤️';
+            position: absolute;
             top: 30px;
             left: 40px;
+            font-size: 2rem;
+            opacity: 0.3;
+            animation: heartPulse 2s ease-in-out infinite;
+            z-index: 2;
         }
 
         .message-container::after {
             bottom: 30px;
             right: 40px;
+            top: auto;
+            left: auto;
         }
 
         @keyframes heartPulse {
@@ -1036,12 +1221,20 @@
                 height: 400px;
             }
             
+            .slide-text {
+                font-size: 1.5rem;
+            }
+            
             .slider-nav.prev {
                 left: 10px;
+                width: 45px;
+                height: 45px;
             }
             
             .slider-nav.next {
                 right: 10px;
+                width: 45px;
+                height: 45px;
             }
             
             .message-container {
@@ -1054,6 +1247,17 @@
             
             .reasons-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .video-container {
+                transform: perspective(1000px) rotateX(0deg);
+            }
+
+            .slide-counter {
+                top: 15px;
+                right: 15px;
+                padding: 8px 15px;
+                font-size: 0.9rem;
             }
         }
 
@@ -1082,6 +1286,22 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Sparkle Effect */
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: sparkle 2s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
     </style>
 </head>
 <body>
@@ -1090,6 +1310,9 @@
     
     <!-- Floating Particles -->
     <div class="particles" id="particles"></div>
+
+    <!-- Shooting Stars -->
+    <div id="shooting-stars"></div>
 
     <!-- Password Screen -->
     <div id="password-screen">
@@ -1108,23 +1331,16 @@
 
     <!-- Main Content -->
     <div id="main-content">
-        <!-- Hero Section with Full Height Image (restored original background) -->
+        <!-- Hero Section with Full Height Image -->
         <section class="hero">
-            <!-- Full Height Background Image (original link) -->
             <div class="hero-background">
                 <img src="https://lh3.googleusercontent.com/d/1Jci7yP2rBJ1fJLt2U-h6VdNSUQZwq_E5" alt="Romantic Background">
             </div>
             
-            <!-- Dark Overlay for text readability -->
             <div class="hero-overlay"></div>
-            
-            <!-- Glow Effect -->
             <div class="hero-glow"></div>
-            
-            <!-- Floating Hearts Overlay on Image -->
             <div class="hero-floating-hearts" id="hero-hearts"></div>
             
-            <!-- Content -->
             <div class="hero-content">
                 <p class="hero-subtitle-top">A Love Story</p>
                 <h1 class="hero-title">Happy Birthday<br>My Love</h1>
@@ -1168,51 +1384,178 @@
             </div>
         </section>
 
-        <!-- Photo Slider (with contain images) -->
+        <!-- Video Section - Cinematic -->
+        <section class="video-section" id="video">
+            <div class="section-header reveal">
+                <h2 class="section-title">Our Love Story</h2>
+                <p class="section-subtitle">A video from my heart to yours</p>
+            </div>
+            <div class="video-container reveal">
+                <div class="video-wrapper">
+                    <!-- استبدل ID الفيديو ده بـ ID الفيديو بتاعك من Google Drive -->
+                    <iframe 
+                        src="https://drive.google.com/file/d/1Jci7yP2rBJ1fJLt2U-h6VdNSUQZwq_E5/preview" 
+                        allow="autoplay; encrypted-media" 
+                        allowfullscreen>
+                    </iframe>
+                    <div class="video-overlay"></div>
+                </div>
+            </div>
+            <p class="video-caption reveal">"Every second with you is a treasure I keep in my heart forever" 💕</p>
+        </section>
+
+        <!-- Photo Slider Section - 20 Images -->
         <section class="slider-section" id="gallery">
             <div class="section-header reveal">
                 <h2 class="section-title">Our Beautiful Moments</h2>
-                <p class="section-subtitle">Every moment with you is a treasure</p>
+                <p class="section-subtitle">20 moments that stole my heart</p>
             </div>
             <div class="slider-container reveal">
                 <div class="slider-wrapper">
                     <div class="slider" id="slider">
+                        <!-- 20 Slides with repeated images and different texts -->
                         <div class="slide active">
-                            <img src="https://lh3.googleusercontent.com/d/1tmqxwo4mquKPUY89FYji_A5DD16b4-Pm?w=1200" alt="Romantic moment 1">
+                            <img src="https://lh3.googleusercontent.com/d/1tmqxwo4mquKPUY89FYji_A5DD16b4-Pm?w=1200" alt="Moment 1">
+                            <div class="slide-counter">1 / 20</div>
                             <div class="slide-overlay">
-                                <p class="slide-text">"Every moment with you is magical"</p>
+                                <p class="slide-text">"Every moment with you is pure magic ✨"</p>
                             </div>
                         </div>
                         <div class="slide">
-                            <img src="https://lh3.googleusercontent.com/d/1l_9Pc5V-_WlYtPvQdDH1hchr5ce2ZiW0?w=1200" alt="Romantic moment 2">
+                            <img src="https://lh3.googleusercontent.com/d/1l_9Pc5V-_WlYtPvQdDH1hchr5ce2ZiW0?w=1200" alt="Moment 2">
+                            <div class="slide-counter">2 / 20</div>
                             <div class="slide-overlay">
-                                <p class="slide-text">"You are my sunshine on rainy days"</p>
-                            </div>
-                        </div><div class="slide">
-                            <img src="https://lh3.googleusercontent.com/d/12wGlMhKZ7mhX2czOfYli17UASQKPfoEx?w=1200" alt="Romantic moment 2">
-                            <div class="slide-overlay">
-                                <p class="slide-text">"You are my sunshine on rainy days"</p>
+                                <p class="slide-text">"You are my sunshine on the darkest days ☀️"</p>
                             </div>
                         </div>
                         <div class="slide">
-                            <img src="https://lh3.googleusercontent.com/d/17y5aC3l7gmsAkXZnWz-6FLIouNHAZygq?w=1200" alt="Romantic moment 3">
+                            <img src="https://lh3.googleusercontent.com/d/12wGlMhKZ7mhX2czOfYli17UASQKPfoEx?w=1200" alt="Moment 3">
+                            <div class="slide-counter">3 / 20</div>
                             <div class="slide-overlay">
-                                <p class="slide-text">"Together forever, never apart"</p>
+                                <p class="slide-text">"In your eyes, I found my home 🏠💕"</p>
                             </div>
                         </div>
                         <div class="slide">
-                            <img src="https://lh3.googleusercontent.com/d/13SrXuJAHXFs7S4QDg7E_h1dCgUEJMMCr?w=1200" alt="Romantic moment 4">
+                            <img src="https://lh3.googleusercontent.com/d/17y5aC3l7gmsAkXZnWz-6FLIouNHAZygq?w=1200" alt="Moment 4">
+                            <div class="slide-counter">4 / 20</div>
                             <div class="slide-overlay">
-                                <p class="slide-text">"My heart beats only for you"</p>
+                                <p class="slide-text">"Together forever, never apart 💑"</p>
                             </div>
                         </div>
                         <div class="slide">
-                            <img src="https://lh3.googleusercontent.com/d/1rTd6LsnbJGZcIerKb2cMZ3U96tjUyQ2m?w=1200" alt="Romantic moment 5">
+                            <img src="https://lh3.googleusercontent.com/d/13SrXuJAHXFs7S4QDg7E_h1dCgUEJMMCr?w=1200" alt="Moment 5">
+                            <div class="slide-counter">5 / 20</div>
                             <div class="slide-overlay">
-                                <p class="slide-text">"Love you to the moon and back"</p>
+                                <p class="slide-text">"My heart beats only for you 💓"</p>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="https://lh3.googleusercontent.com/d/1rTd6LsnbJGZcIerKb2cMZ3U96tjUyQ2m?w=1200" alt="Moment 6">
+                            <div class="slide-counter">6 / 20</div>
+                            <div class="slide-overlay">
+                                <p class="slide-text">"Love you to the moon and back 🌙"</p>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="https://lh3.googleusercontent.com/d/1tmqxwo4mquKPUY89FYji_A5DD16b4-Pm?w=1200" alt="Moment 7">
+                            <div class="slide-counter">7 / 20</div>
+                            <div class="slide-overlay">
+                                <p class="slide-text">"Your smile is my favorite view 😊"</p>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="https://lh3.googleusercontent.com/d/1l_9Pc5V-_WlYtPvQdDH1hchr5ce2ZiW0?w=1200" alt="Moment 8">
+                            <div class="slide-counter">8 / 20</div>
+                            <div class="slide-overlay">
+                                <p class="slide-text">"With you, every day is Valentine's Day 💝"</p>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="https://lh3.googleusercontent.com/d/12wGlMhKZ7mhX2czOfYli17UASQKPfoEx?w=1200" alt="Moment 9">
+                            <div class="slide-counter">9 / 20</div>
+                            <div class="slide-overlay">
+                                <p class="slide-text">"You complete me in every way 🧩❤️"</p>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="https://lh3.googleusercontent.com/d/17y5aC3l7gmsAkXZnWz-6FLIouNHAZygq?w=1200" alt="Moment 10">
+                            <div class="slide-counter">10 / 20</div>
+                            <div class="slide-overlay">
+                                <p class="slide-text">"Forever isn't long enough with you ⏳💕"</p>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="https://lh3.googleusercontent.com/d/13SrXuJAHXFs7S4QDg7E_h1dCgUEJMMCr?w=1200" alt="Moment 11">
+                            <div class="slide-counter">11 / 20</div>
+                            <div class="slide-overlay">
+                                <p class="slide-text">"You are my dream come true 🌟"</p>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="https://lh3.googleusercontent.com/d/1rTd6LsnbJGZcIerKb2cMZ3U96tjUyQ2m?w=1200" alt="Moment 12">
+                            <div class="slide-counter">12 / 20</div>
+                            <div class="slide-overlay">
+                                <p class="slide-text">"Holding your hand is my safe place 🤝"</p>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="https://lh3.googleusercontent.com/d/1tmqxwo4mquKPUY89FYji_A5DD16b4-Pm?w=1200" alt="Moment 13">
+                            <div class="slide-counter">13 / 20</div>
+                            <div class="slide-overlay">
+                                <p class="slide-text">"Your laugh is my favorite sound 🎵"</p>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="https://lh3.googleusercontent.com/d/1l_9Pc5V-_WlYtPvQdDH1hchr5ce2ZiW0?w=1200" alt="Moment 14">
+                            <div class="slide-counter">14 / 20</div>
+                            <div class="slide-overlay">
+                                <p class="slide-text">"I fall for you more every single day 🍂❤️"</p>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="https://lh3.googleusercontent.com/d/12wGlMhKZ7mhX2czOfYli17UASQKPfoEx?w=1200" alt="Moment 15">
+                            <div class="slide-counter">15 / 20</div>
+                            <div class="slide-overlay">
+                                <p class="slide-text">"You are my today and all my tomorrows 📅💕"</p>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="https://lh3.googleusercontent.com/d/17y5aC3l7gmsAkXZnWz-6FLIouNHAZygq?w=1200" alt="Moment 16">
+                            <div class="slide-counter">16 / 20</div>
+                            <div class="slide-overlay">
+                                <p class="slide-text">"My favorite place is inside your hug 🤗"</p>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="https://lh3.googleusercontent.com/d/13SrXuJAHXFs7S4QDg7E_h1dCgUEJMMCr?w=1200" alt="Moment 17">
+                            <div class="slide-counter">17 / 20</div>
+                            <div class="slide-overlay">
+                                <p class="slide-text">"You make ordinary moments extraordinary ✨"</p>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="https://lh3.googleusercontent.com/d/1rTd6LsnbJGZcIerKb2cMZ3U96tjUyQ2m?w=1200" alt="Moment 18">
+                            <div class="slide-counter">18 / 20</div>
+                            <div class="slide-overlay">
+                                <p class="slide-text">"I choose you, today, tomorrow, always 💍"</p>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="https://lh3.googleusercontent.com/d/1tmqxwo4mquKPUY89FYji_A5DD16b4-Pm?w=1200" alt="Moment 19">
+                            <div class="slide-counter">19 / 20</div>
+                            <div class="slide-overlay">
+                                <p class="slide-text">"You are my greatest adventure 🗺️❤️"</p>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="https://lh3.googleusercontent.com/d/1l_9Pc5V-_WlYtPvQdDH1hchr5ce2ZiW0?w=1200" alt="Moment 20">
+                            <div class="slide-counter">20 / 20</div>
+                            <div class="slide-overlay">
+                                <p class="slide-text">"Happy Birthday to my everything! 🎂🎉"</p>
                             </div>
                         </div>
                     </div>
+                    <div class="slider-progress" id="slider-progress"></div>
                     <div class="slider-nav prev" onclick="prevSlide()">❮</div>
                     <div class="slider-nav next" onclick="nextSlide()">❯</div>
                 </div>
@@ -1223,13 +1566,15 @@
         <!-- Love Message -->
         <section class="message-section">
             <div class="message-container reveal">
-                <p class="love-message" id="love-message">
-                    My love, this small website is just a tiny reflection of how special you are to me. Every moment with you makes my life brighter and more beautiful. Your smile lights up my darkest days, your laughter is my favorite melody, and your love is the greatest gift I've ever received.
-                </p>
-                <div class="message-divider"></div>
-                <p class="love-message" style="animation-delay: 0.3s;">
-                    On this special day, I want you to know that you are cherished, adored, and loved beyond measure. You are my today and all of my tomorrows. Happy Birthday, my everything. ❤️
-                </p>
+                <div class="message-content">
+                    <p class="love-message" id="love-message">
+                        My love, this small website is just a tiny reflection of how special you are to me. Every moment with you makes my life brighter and more beautiful. Your smile lights up my darkest days, your laughter is my favorite melody, and your love is the greatest gift I've ever received.
+                    </p>
+                    <div class="message-divider"></div>
+                    <p class="love-message" style="animation-delay: 0.3s;">
+                        On this special day, I want you to know that you are cherished, adored, and loved beyond measure. You are my today and all of my tomorrows. Happy Birthday, my everything. ❤️
+                    </p>
+                </div>
             </div>
         </section>
 
@@ -1276,9 +1621,8 @@
         <button class="audio-control" id="audio-btn" onclick="toggleAudio()">🎵</button>
     </div>
 
-    <!-- Audio with new URL from GitHub -->
+    <!-- Audio -->
     <audio id="bg-music" loop>
-        
         <source src="https://github.com/arsg296/birthday/raw/refs/heads/main/assets/audio/Albumaty.Com.Elissa.Million.Ahibbak.mp3" type="audio/mpeg">
     </audio>
 
@@ -1296,6 +1640,20 @@
                 particle.style.height = particle.style.width;
                 container.appendChild(particle);
             }
+        }
+
+        // Create shooting stars
+        function createShootingStars() {
+            const container = document.getElementById('shooting-stars');
+            setInterval(() => {
+                const star = document.createElement('div');
+                star.className = 'shooting-star';
+                star.style.top = Math.random() * 50 + '%';
+                star.style.left = '0';
+                star.style.animationDuration = (2 + Math.random() * 2) + 's';
+                container.appendChild(star);
+                setTimeout(() => star.remove(), 4000);
+            }, 3000);
         }
 
         // Create floating hearts for password screen
@@ -1346,6 +1704,7 @@
                         mainContent.classList.add('visible');
                         initAnimations();
                         createHeroHearts();
+                        createShootingStars();
                         initSlider();
                         bgMusic.volume = 0.3;
                         bgMusic.play().catch(e => console.log('Audio autoplay blocked'));
@@ -1399,9 +1758,11 @@
             document.getElementById('seconds').textContent = seconds;
         }
 
-        // Photo Slider
+        // Photo Slider - Enhanced for 20 slides
         let currentSlide = 0;
+        const totalSlides = 20;
         let slideInterval;
+        let progressInterval;
 
         function initSlider() {
             const slides = document.querySelectorAll('.slide');
@@ -1431,18 +1792,20 @@
             dots.forEach((dot, index) => {
                 dot.classList.toggle('active', index === currentSlide);
             });
+
+            // Update progress bar
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            document.getElementById('slider-progress').style.width = progress + '%';
         }
 
         function nextSlide() {
-            const slides = document.querySelectorAll('.slide');
-            currentSlide = (currentSlide + 1) % slides.length;
+            currentSlide = (currentSlide + 1) % totalSlides;
             updateSlider();
             resetAutoSlide();
         }
 
         function prevSlide() {
-            const slides = document.querySelectorAll('.slide');
-            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
             updateSlider();
             resetAutoSlide();
         }
@@ -1454,12 +1817,24 @@
         }
 
         function startAutoSlide() {
-            slideInterval = setInterval(nextSlide, 4000);
+            slideInterval = setInterval(nextSlide, 5000);
+            updateProgressBar();
         }
 
         function resetAutoSlide() {
             clearInterval(slideInterval);
+            clearInterval(progressInterval);
             startAutoSlide();
+        }
+
+        function updateProgressBar() {
+            const progressBar = document.getElementById('slider-progress');
+            let width = 0;
+            progressInterval = setInterval(() => {
+                width += 2;
+                if (width > 100) width = 0;
+                progressBar.style.width = width + '%';
+            }, 100);
         }
 
         // Audio toggle
