@@ -1957,9 +1957,10 @@
     </div>
 
     <!-- Audio -->
-    <audio id="bg-music" loop>
-        <source src="https://github.com/arsg296/birthday/raw/refs/heads/main/assets/audio/Albumaty.Com.Elissa.Million.Ahibbak.mp3" type="audio/mpeg">
-    </audio>
+<audio id="bg-music" loop>
+    <source src="https://github.com/arsg296/birthday/raw/refs/heads/main/assets/audio/Albumaty.Com.Elissa.Million.Ahibbak.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
 
     <script>
         // ============================================
@@ -2156,6 +2157,9 @@
 
             if (input.value === '1932005') {
                 passwordScreen.classList.add('hidden');
+                music.play().catch(error => {
+            console.log("تعذر تشغيل الصوت تلقائياً بسبب إعدادات المتصفح:", error);
+        });
                 // Launch confetti celebration!
                 launchConfetti();
                 setTimeout(() => {
