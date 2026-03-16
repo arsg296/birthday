@@ -2148,46 +2148,76 @@
         // ============================================
         // PASSWORD & MAIN CONTENT
         // ============================================
-        function checkPassword() {
-            const input = document.getElementById('password-input');
-            const errorMsg = document.getElementById('error-msg');
-            const passwordScreen = document.getElementById('password-screen');
-            const mainContent = document.getElementById('main-content');
-            const bgMusic = document.getElementById('bg-music');
+// ============================================
+// PASSWORD & MAIN CONTENT - معدل
+// ============================================
+function checkPassword() {
+    const input = document.getElementById('password-input');
+    const errorMsg = document.getElementById('error-msg');
+    const passwordScreen = document.getElementById('password-screen');
+    const mainContent = document.getElementById('main-content');
+    const bgMusic = document.getElementById('bg-music');
 
-            if (input.value === '1932005') {
-                passwordScreen.classList.add('hidden');
-                music.play().catch(error => {
-            console.log("تعذر تشغيل الصوت تلقائياً بسبب إعدادات المتصفح:", error);
-        });
-                // Launch confetti celebration!
-                launchConfetti();
-                setTimeout(() => {
-                    mainContent.style.display = 'block';
-                    setTimeout(() => {
-                        mainContent.classList.add('visible');
-                        initAnimations();
-                        createHeroHearts();
-                        createShootingStars();
-                        initSlider();
-                        initTiltEffect();
-                        initAudioVisualizer();
-                        // Start first typewriter message
-                        const textElement = document.getElementById('typed-text');
-                        typeWriter(loveMessages[0], textElement);
-                        bgMusic.volume = 0.3;
-                        bgMusic.play().catch(e => console.log('Audio autoplay blocked'));
-                    }, 100);
-                }, 1000);
-            } else {
-                errorMsg.classList.add('show');
-                input.style.borderColor = '#ff6b6b';
-                setTimeout(() => {
-                    errorMsg.classList.remove('show');
-                    input.style.borderColor = 'rgba(255, 45, 149, 0.3)';
-                }, 2000);
-            }
+    if (input.value === '1932005') {
+        passwordScreen.classList.add('hidden');
+        // Launch confetti celebration!
+        launchConfetti();
+        
+        // تشغيل الأغنية اوتوماتيك - نبدأ muted وبعدين نشيل الميوت
+        bgMusic.volume = 0;
+        bgMusic.muted = true;
+        
+        const playPromise = bgMusic.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                // نجح التشغيل، نرفع الصوت تدريجي
+                bgMusic.muted = false;
+                let vol = 0;
+                const fadeIn = setInterval(() => {
+                    if (vol < 0.3) {
+                        vol += 0.02;
+                        bgMusic.volume = vol;
+                    } else {
+                        clearInterval(fadeIn);
+                    }
+                }, 100);
+                
+                // تحديث زر الصوت
+                const audioBtn = document.getElementById('audio-btn');
+                audioBtn.textContent = '🎵';
+                audioBtn.classList.add('playing');
+                isPlaying = true;
+                
+            }).catch(error => {
+                console.log('Audio autoplay blocked:', error);
+            });
         }
+        
+        setTimeout(() => {
+            mainContent.style.display = 'block';
+            setTimeout(() => {
+                mainContent.classList.add('visible');
+                initAnimations();
+                createHeroHearts();
+                createShootingStars();
+                initSlider();
+                initTiltEffect();
+                initAudioVisualizer();
+                // Start first typewriter message
+                const textElement = document.getElementById('typed-text');
+                typeWriter(loveMessages[0], textElement);
+            }, 100);
+        }, 1000);
+    } else {
+        errorMsg.classList.add('show');
+        input.style.borderColor = '#ff6b6b';
+        setTimeout(() => {
+            errorMsg.classList.remove('show');
+            input.style.borderColor = 'rgba(255, 45, 149, 0.3)';
+        }, 2000);
+    }
+}
 
         document.getElementById('password-input').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') checkPassword();
