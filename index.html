@@ -1740,6 +1740,32 @@
             0%, 100% { opacity: 0.8; transform: scale(1); }
             50% { opacity: 1; transform: scale(1.05); }
         }
+        /* تعديل سلايدر الصور الجديد ليكون Scroll يدوي بدون تمرير تلقائي */
+#new-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    transform: none !important;
+    scrollbar-width: thin;
+}
+
+#new-slider .slide {
+    scroll-snap-align: start;
+    min-width: 300px;
+    flex-shrink: 0;
+    width: auto !important;
+}
+
+.slider-nav.prev, .slider-nav.next {
+    display: none;
+}
+
+#new-slider-progress {
+    display: none;
+}
+
     </style>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@latest/dist/confetti.browser.min.js"></script>
     <base target="_blank">
@@ -2169,6 +2195,44 @@
                 <div class="slider-dots" id="slider-dots"></div>
             </div>
         </section>
+        <!-- New Slider Section with 7 images -->
+<section class="slider-section" id="new-gallery">
+    <div class="section-header reveal">
+        <h2 class="section-title">Our Special Moments</h2>
+        <p class="section-subtitle">7 beautiful memories</p>
+    </div>
+    <div class="slider-container reveal">
+        <div class="slider-wrapper">
+            <div class="slider" id="new-slider">
+                <div class="slide active">
+                    <img src="https://lh3.googleusercontent.com/d/1wpTR4964tzYCLhpeLhK4IgMp0VaQoL72" alt="Image 1">
+                </div>
+                <div class="slide">
+                    <img src="https://lh3.googleusercontent.com/d/1bEYq8wCvVkROuUeRl1A8EIThQRPaynSd" alt="Image 2">
+                </div>
+                <div class="slide">
+                    <img src="https://lh3.googleusercontent.com/d/1jm5wPrYmBOehz0buaiMv_yytpWcQHEbp" alt="Image 3">
+                </div>
+                <div class="slide">
+                    <img src="https://lh3.googleusercontent.com/d/15UxbWOK0pmsAm8l3W99aCNMFVMRH5c7j" alt="Image 4">
+                </div>
+                <div class="slide">
+                    <img src="https://lh3.googleusercontent.com/d/1V-Ot3hlpfAb1vORO761aAdBk3Cky35_-" alt="Image 5">
+                </div>
+                <div class="slide">
+                    <img src="https://lh3.googleusercontent.com/d/1Z5hiF9vF5-4WJ-RtXQNY5SldFDgC6fMI" alt="Image 6">
+                </div>
+                <div class="slide">
+                    <img src="https://lh3.googleusercontent.com/d/1Z5hiF9vF5-4WJ-RtXQNY5SldFDgC6fMI" alt="Image 7">
+                </div>
+            </div>
+            <div class="slider-progress" id="new-slider-progress"></div>
+            <div class="slider-nav prev" onclick="prevNewSlide()">❮</div>
+            <div class="slider-nav next" onclick="nextNewSlide()">❯</div>
+        </div>
+    </div>
+</section>
+
 
         <!-- Love Message -->
         <section class="message-section">
@@ -2712,13 +2776,87 @@
         }
 
         // Initialize
-        window.onload = function() {
-            updatePreloader();
-            createParticles();
-            createPasswordHearts();
-            setInterval(updateCounter, 1000);
-            updateCounter();
-        };
+        // window.onload = function() {
+        //     updatePreloader();
+        //     createParticles();
+        //     createPasswordHearts();
+        //     setInterval(updateCounter, 1000);
+        //     updateCounter();
+        // };
+        // New slider variables
+let currentNewSlide = 0;
+const totalNewSlides = 7;
+let newSlideInterval;
+let newProgressInterval;
+
+function initNewSlider() {
+    // const slides = document.querySelectorAll('#new-slider .slide');
+    // // startNewAutoSlide();  // تم تعطيل التمرير التلقائي
+    // updateNewSlider(); // لتحديث العرض لأول صورة
+}
+
+
+function updateNewSlider() {
+    const slider = document.getElementById('new-slider');
+    const slides = document.querySelectorAll('#new-slider .slide');
+
+    slider.style.transform = `translateX(-${currentNewSlide * 100}%)`;
+
+    slides.forEach((slide, index) => {
+        slide.classList.toggle('active', index === currentNewSlide);
+    });
+
+    const progress = ((currentNewSlide + 1) / totalNewSlides) * 100;
+    document.getElementById('new-slider-progress').style.width = progress + '%';
+}
+
+function nextNewSlide() {
+    currentNewSlide = (currentNewSlide + 1) % totalNewSlides;
+    updateNewSlider();
+    resetNewAutoSlide();
+}
+
+function prevNewSlide() {
+    currentNewSlide = (currentNewSlide - 1 + totalNewSlides) % totalNewSlides;
+    updateNewSlider();
+    resetNewAutoSlide();
+}
+
+function startNewAutoSlide() {
+    newSlideInterval = setInterval(nextNewSlide, 5000);
+    updateNewProgressBar();
+}
+
+function resetNewAutoSlide() {
+    clearInterval(newSlideInterval);
+    clearInterval(newProgressInterval);
+    startNewAutoSlide();
+}
+
+function updateNewProgressBar() {
+    const progressBar = document.getElementById('new-slider-progress');
+    let width = 0;
+    newProgressInterval = setInterval(() => {
+        width += 2;
+        if (width > 100) width = 0;
+        progressBar.style.width = width + '%';
+    }, 100);
+}
+
+// استدعاء التهيئة بعد عرض المحتوى
+window.onload = function() {
+    updatePreloader();
+    createParticles();
+    createPasswordHearts();
+    setInterval(updateCounter, 1000);
+    updateCounter();
+
+    // تهيئة السلايدر الجديد إذا كانت الصفحة معروضة
+    if(document.getElementById('new-slider')) {
+        initNewSlider();
+    }
+};
+
     </script>
 </body>
 </html>
