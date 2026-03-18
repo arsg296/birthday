@@ -2024,18 +2024,33 @@
         </section>
 
         <!-- Audio Visualizer Section -->
-        <section class="visualizer-section" id="visualizer">
-            <div class="section-header reveal">
-                <h2 class="section-title">Music of My Heart</h2>
-                <p class="section-subtitle">Watch the rhythm of my love for you</p>
-            </div>
-            <div class="visualizer-container reveal">
-                <canvas id="audio-visualizer"></canvas>
-                <div class="visualizer-overlay">
-                    <p class="visualizer-text">Play the music to see my heart dance 💓</p>
-                </div>
-            </div>
-        </section>
+<section class="visualizer-section" id="visualizer">
+    <div class="section-header reveal">
+        <h2 class="section-title">Music of My Heart</h2>
+        <p class="section-subtitle">Watch the rhythm of my love for you</p>
+    </div>
+    <div class="visualizer-container reveal">
+        <canvas id="audio-visualizer"></canvas>
+        <div class="visualizer-overlay">
+            <p class="visualizer-text">Play the music to see my heart dance 💓</p>
+        </div>
+
+        <!-- أدوات التحكم بالصوت -->
+        <audio id="custom-audio" src="https://github.com/arsg296/birthday/raw/refs/heads/main/assets/audio/birthday.mp3"></audio>
+
+        <div style="margin-top: 20px; display: flex; align-items: center; gap: 12px; max-width: 450px;">
+            <button id="play-pause-btn" style="padding:10px 20px; cursor:pointer;">▶️ Play</button>
+            <button id="rewind-btn" style="padding:10px 15px; cursor:pointer;">⏪ 10s</button>
+            <button id="forward-btn" style="padding:10px 15px; cursor:pointer;">⏩ 10s</button>
+            <input type="range" id="seek-bar" value="0" max="100" style="flex: 1; cursor: pointer;">
+            <span id="current-time" style="color: var(--soft-gold); font-family: 'Montserrat', sans-serif;">0:00</span>
+            <span style="color: var(--soft-gold); font-family: 'Montserrat', sans-serif;">/</span>
+            <span id="duration" style="color: var(--soft-gold); font-family: 'Montserrat', sans-serif;">0:00</span>
+        </div>
+    </div>
+</section>
+
+
 
         <!-- Original Photo Slider Section - 20 Images -->
         <section class="slider-section" id="gallery">
@@ -2939,6 +2954,63 @@ function updateNewProgressBar() {
         progressBar.style.width = width + '%';
     }, 100);
 }
+const customAudio = document.getElementById('custom-audio');
+const playPauseBtn = document.getElementById('play-pause-btn');
+const rewindBtn = document.getElementById('rewind-btn');
+const forwardBtn = document.getElementById('forward-btn');
+const seekBar = document.getElementById('seek-bar');
+const currentTimeElem = document.getElementById('current-time');
+const durationElem = document.getElementById('duration');
+
+function formatTime(seconds) {
+    const min = Math.floor(seconds / 60);
+    const sec = Math.floor(seconds % 60);
+    return `${min}:${sec < 10 ? '0' + sec : sec}`;
+}
+
+// تحديث المدة عند تحميل ملف الصوت
+customAudio.addEventListener('loadedmetadata', () => {
+    seekBar.max = Math.floor(customAudio.duration);
+    durationElem.textContent = formatTime(customAudio.duration);
+});
+
+// تحديث شريط البحث مع تقدم الصوت
+customAudio.addEventListener('timeupdate', () => {
+    seekBar.value = Math.floor(customAudio.currentTime);
+    currentTimeElem.textContent = formatTime(customAudio.currentTime);
+});
+
+// تشغيل وإيقاف مؤقت
+playPauseBtn.addEventListener('click', () => {
+    if (customAudio.paused) {
+        customAudio.play();
+        playPauseBtn.textContent = '⏸️ Pause';
+    } else {
+        customAudio.pause();
+        playPauseBtn.textContent = '▶️ Play';
+    }
+});
+
+// إعادة 10 ثواني
+rewindBtn.addEventListener('click', () => {
+    customAudio.currentTime = Math.max(customAudio.currentTime - 10, 0);
+});
+
+// تقديم 10 ثواني
+forwardBtn.addEventListener('click', () => {
+    customAudio.currentTime = Math.min(customAudio.currentTime + 10, customAudio.duration);
+});
+
+// التحكم عن طريق شريط البحث
+seekBar.addEventListener('input', () => {
+    customAudio.currentTime = seekBar.value;
+});
+
+
+
+
+
+        
 
 // استدعاء التهيئة بعد عرض المحتوى
 window.onload = function() {
